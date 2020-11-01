@@ -8,33 +8,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class FindServices extends AppCompatActivity {
 
-    private Button generalUser, serProvider, addService, btnSubmit, btnMechanic, btnFuel, btnLifter, btnPuncture;
+    private Button generalUser, serProvider, addService, btnMechanic, btnFuel, btnLifter, btnPuncture;
     private Context context;
-    private Spinner spin;
-    private ArrayAdapter aa;
-    private EditText et_fullname, et_cnic, et_phone, et_shop_area, et_shop_name, et_shop_address, et_working_hours, et_email_address
-            , et_map_latitude, et_map_longitude;
-    private CheckBox one, two, three, four, five, six;
-
-    private String[] services = { "Car Mechanic", "Puncture Shop", "Fuel Station", "Vehicle Lifter"};
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_services);
         context = this;
-        aa = new ArrayAdapter(context,android.R.layout.simple_spinner_item,services);
+        /*mDatabase = FirebaseDatabase.getInstance();
+        mRef = mDatabase.getReference();*/
 
         initView();
     }
@@ -54,60 +46,28 @@ public class FindServices extends AppCompatActivity {
         serProvider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Login Page wala kam hoga", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Login Page wala kam hoga", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(FindServices.this, ServiceProviderData.class);
+                startActivity(intent);
             }
         });
 
         addService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContentView(R.layout.user_form);
-                initViewsForm();
+                Intent intent = new Intent(FindServices.this, FormActivity.class);
+                startActivity(intent);
             }
         });
     }
 
-    private void initViewsForm() {
-        et_fullname = findViewById(R.id.et_fullname);
-        et_cnic = findViewById(R.id.et_cnic);
-        et_phone = findViewById(R.id.et_phone);
-        et_shop_area = findViewById(R.id.et_shop_area);
-        et_shop_name = findViewById(R.id.et_shop_name);
-        et_shop_address = findViewById(R.id.et_shop_address);
-        et_working_hours = findViewById(R.id.et_working_hours);
-        et_email_address = findViewById(R.id.et_email_address);
-        et_map_latitude = findViewById(R.id.et_map_latitude);
-        et_map_longitude = findViewById(R.id.et_map_longitude);
-        one = findViewById(R.id.one);
-        two = findViewById(R.id.two);
-        three = findViewById(R.id.three);
-        four = findViewById(R.id.four);
-        five = findViewById(R.id.five);
-        six = findViewById(R.id.six);
-        btnSubmit = findViewById(R.id.btn_submit);
-        spin = findViewById(R.id.sp_type);
-        AdapterView.OnItemSelectedListener adapterOnItemListener = new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                        Toast.makeText(getApplicationContext(),services[position] , Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        };
-        spin.setOnItemSelectedListener(adapterOnItemListener);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spin.setAdapter(aa);
-
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "DB ka Structure bnana hai with Firebase", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+    /*private List<String> fetchCheckBoxData(){
+        List<String> listCheckBox = new ArrayList<>();
+        for (int i = 0; i <checkBoxData.length() ; i++) {
+            listCheckBox.add(checkBoxData.toString());
+        }
+        return listCheckBox;
+    }*/
 
     public void showDialog(Context context) {
         /***Is dialog main User k click lgne hain js main Map open hoga***/
